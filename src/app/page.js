@@ -1,25 +1,3 @@
-"use client"
-
-
-// export default function Home() {
-
-//   return (
-//     <main>
-//       <h1>Food App</h1>
-//     </main>
-
-//   );
-// }
-
-
-// export default function Home() {
-//   return (
-//     <div className="min-h-screen flex items-center justify-center">
-//       <h1 className="text-4xl font-bold text-black">Hello, Tailwind in Next.js!</h1>
-//     </div>
-//   )
-// }
-
 'use client'; 
 import Layout from './_components/Layout';
 import AuthForm from './_components/AuthForm';
@@ -35,7 +13,7 @@ const loginSchema = yup.object().shape({
 export default function Home() {
   const router = useRouter();
   const onSubmit = async data => {
-    await axios.post('/api/auth/login', data);
+    await axios.post('/api/signup', data);
     router.push('/');
   };
 
@@ -70,7 +48,7 @@ export default function Home() {
         )}
       </AuthForm>
       <p className="mt-4 text-center">
-        Don't have an account?{' '}
+        Don&apos;t have an account?
         <a href="/auth/signup" className="text-indigo-600 hover:underline">
           Sign Up
         </a>
@@ -78,4 +56,3 @@ export default function Home() {
     </Layout>
   );
 }
-

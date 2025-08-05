@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -12,6 +13,8 @@
     "@hookform/resolvers": "^5.2.0",
     "@tailwindcss/postcss": "^4.1.11",
     "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "mongodb": "^6.18.0",
     "next": "14.2.5",
     "postcss": "^8.5.6",
     "react": "^18",
@@ -21,6 +24,7 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.12.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5"
   }

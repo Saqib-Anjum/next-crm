@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  // This flag makes `npm run build` emit a fully static `out/` folder
+  // output: 'export',
+};
 
-export default nextConfig;
+module.exports = nextConfig;
+
+
 
 
 /* 
