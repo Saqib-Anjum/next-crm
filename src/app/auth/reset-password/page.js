@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+'use client';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Layout from '../../_components/Layout';
 import AuthForm from '../../_components/AuthForm';
@@ -11,6 +12,16 @@ const resetPasswordSchema = yup.object().shape({
 });
 
 export default function ResetPasswordPage() {
+  return (
+    <Layout>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ResetPasswordContent />
+      </Suspense>
+    </Layout>
+  );
+}
+
+function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [token, setToken] = useState(null);
@@ -41,14 +52,12 @@ export default function ResetPasswordPage() {
 
   if (!token) {
     return (
-      <Layout>
-        <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">Invalid or missing reset token.</h2>
-      </Layout>
+      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">Invalid or missing reset token.</h2>
     );
   }
 
   return (
-    <Layout>
+    <>
       <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">Reset Password</h2>
       <AuthForm schema={resetPasswordSchema} onSubmit={handleResetPassword} submitText="Reset Password">
         {({ register, errors }) => (
@@ -74,6 +83,6 @@ export default function ResetPasswordPage() {
           </>
         )}
       </AuthForm>
-    </Layout>
+    </>
   );
 }
