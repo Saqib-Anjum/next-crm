@@ -28,6 +28,6 @@ export async function POST(request) {
     return NextResponse.json({ message: 'User created', userId: result.insertedId });
   } catch (err) {
     console.error('Signup API error:', err);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error', details: err.message }, { status: 500 });
   }
 }

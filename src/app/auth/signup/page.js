@@ -1,15 +1,9 @@
-'use client'; 
-import Layout from './_components/Layout';
-import AuthForm from './_components/AuthForm';
+'use client';
+import Layout from '../../_components/Layout';
+import AuthForm from '../../_components/AuthForm';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-
-const loginSchema = yup.object().shape({
-  email: yup.string().email().required('Email is required'),
-  password: yup.string().min(6, 'Minimum 6 characters').required('Password is required'),
-});
 
 const signupSchema = yup.object().shape({
   email: yup.string().email().required('Email is required'),
@@ -17,41 +11,23 @@ const signupSchema = yup.object().shape({
   confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
 });
 
-export default function Home() {
+export default function SignupPage() {
   const router = useRouter();
-  const handleLogin = async data => {
-    try {
-      const response = await axios.post('/api/login', data);
-      localStorage.setItem('token', response.data.token);
-      router.push('/dashboard'); // Redirect to dashboard on successful login
-    } catch (error) {
-      console.error('Login error:', error.response?.data?.error || error.message);
-      alert(error.response?.data?.error || 'Login failed');
-    }
-  };
-
   const handleSignup = async data => {
     try {
       await axios.post('/api/signup', data);
       alert('Account created successfully! Please login.');
-      router.push('/'); // Redirect to login page after signup
+      router.push('/');
     } catch (error) {
       console.error('Signup error:', error.response?.data?.error || error.message);
       alert(error.response?.data?.error || 'Signup failed');
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      router.push('/dashboard'); // Redirect to dashboard if already logged in
-    }
-  }, [router]);
-
   return (
     <Layout>
-      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">Login</h2>
-      <AuthForm schema={loginSchema} onSubmit={handleLogin} submitText="Login">
+      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">Sign Up</h2>
+      <AuthForm schema={signupSchema} onSubmit={handleSignup} submitText="Sign Up">
         {({ register, errors }) => (
           <>
             <div>
@@ -68,21 +44,22 @@ export default function Home() {
               />
               <p className="text-red-500 text-sm">{errors.password?.message}</p>
             </div>
-            <div className="text-right">
-              <a
-                href="/auth/forgot-password"
-                className="text-indigo-600 hover:underline text-sm"
-              >
-                Forgot password?
-              </a>
+            <div>
+              <label className="block font-semibold">Confirm Password</label>
+              <input
+                type="password"
+                {...register('confirmPassword')}
+                className="w-full mt-1 p-2 border rounded-lg"
+              />
+              <p className="text-red-500 text-sm">{errors.confirmPassword?.message}</p>
             </div>
           </>
         )}
       </AuthForm>
       <p className="mt-4 text-center">
-        Don&apos;t have an account?
-        <a href="/auth/signup" className="text-indigo-600 hover:underline">
-          Sign Up
+        Already have an account?
+        <a href="/" className="text-indigo-600 hover:underline">
+          Login
         </a>
       </p>
     </Layout>
