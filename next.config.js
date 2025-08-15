@@ -7,9 +7,20 @@
 // module.exports = nextConfig;
 
 // next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-module.exports = nextConfig;
+module.exports = {
+  output: 'export',
+  images: { unoptimized: true },
+  exportPathMap: async (defaultPathMap) => {
+    const filtered = Object.keys(defaultPathMap)
+      .filter((path) => !path.startsWith('/api'))
+      .reduce((acc, path) => {
+        acc[path] = defaultPathMap[path];
+        return acc;
+      }, {});
+    return filtered;
+  },
+};
+
 
 
 
